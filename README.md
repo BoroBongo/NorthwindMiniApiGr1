@@ -43,6 +43,7 @@ I use [**Shields IO**](https://shields.io/) for making badges. It is a simple an
 
 # Demo-Preview
 ![Demo Preview](/DemoPreview.png)
+![Northwind ERD](/Northwind-ERD.png)
 
 <!-- Add a demo for your project -->
 
