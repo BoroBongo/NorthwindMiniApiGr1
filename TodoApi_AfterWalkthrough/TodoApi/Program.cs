@@ -5,11 +5,11 @@ using TodoApi.Models;
 namespace TodoApi;
 public class Program
     {
-    public IConfiguration Configuration { get; }
+    public IConfiguration configuration { get; }
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer(this.Configuration.GetConnectionString("DBConnection")));
+        builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer("Data Source = (localdb)/MSSQLLocalDB; Initial Catalog = Northwind; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False"));
         builder.Services.AddControllers();
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
         builder.Services.AddEndpointsApiExplorer();
