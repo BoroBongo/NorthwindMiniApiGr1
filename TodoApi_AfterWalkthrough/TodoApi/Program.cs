@@ -6,11 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<TodoContext>(opt => opt.UseSqlServer(GetConnectionStringByName("DatabaseConString")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
 }
 
 app.UseHttpsRedirection();
