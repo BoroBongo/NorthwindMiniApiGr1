@@ -23,16 +23,16 @@ namespace ProductsApiApp.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts()
         {
             var output = from product in _context.Products.Include(c => c.Supplier).Include(c => c.Category)
                          select product;
-            return await output.ToListAsync();
+            return await output.Select(x => ProductToDTO(x)).ToListAsync();
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductDTO>> GetProduct(int id)
         {
             var product = await _context.Products.Include(c=>c.Supplier).Include(c=>c.Category).Where(c=>c.ProductId==id).FirstOrDefaultAsync();
 
@@ -41,7 +41,7 @@ namespace ProductsApiApp.Controllers
                 return NotFound();
             }
 
-            return product;
+            return ProductToDTO(product);
         }
 
         // PUT: api/Products/5
@@ -106,5 +106,20 @@ namespace ProductsApiApp.Controllers
         {
             return _context.Products.Any(e => e.ProductId == id);
         }
+
+        private static ProductDTO ProductToDTO(Product product) =>
+            new ProductDTO
+            {
+                ProductName = product.ProductName,
+                QuantityPerUnit = product.QuantityPerUnit,
+                UnitPrice = product.UnitPrice,
+                UnitsInStock = product.UnitsInStock,
+                UnitsOnOrder = product.UnitsOnOrder,
+                ReorderLevel = product.ReorderLevel,
+                Discontinued = product.Discontinued,
+                Category = product.Category.CategoryName,
+                Supplier = product.Supplier.CompanyName,
+            };
+        
     }
 }
