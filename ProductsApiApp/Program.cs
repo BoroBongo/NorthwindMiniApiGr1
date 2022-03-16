@@ -9,8 +9,6 @@ var constr = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Northwind;Inte
 
 SqlConnection conn = new SqlConnection();
 conn.ConnectionString = constr;
-conn.Open();
-Console.WriteLine(conn.State);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer(conn));
