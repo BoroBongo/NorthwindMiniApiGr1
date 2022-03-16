@@ -10,11 +10,11 @@ namespace ProductsApiApp.Models
             Products = new HashSet<Product>();
         }
 
-        public int CategoryId { get; set; }
+        public int CategoryId { get; set; } //
         public string CategoryName { get; set; } = null!;
         public string? Description { get; set; }
-        public byte[]? Picture { get; set; }
+        public byte[]? Picture { get; set; } //  <--------------------------- HERE SHAKIL
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; } // Don't return anything
     }
 }

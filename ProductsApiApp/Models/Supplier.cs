@@ -10,7 +10,7 @@ namespace ProductsApiApp.Models
             Products = new HashSet<Product>();
         }
 
-        public int SupplierId { get; set; }
+        public int SupplierId { get; set; } //
         public string CompanyName { get; set; } = null!;
         public string? ContactName { get; set; }
         public string? ContactTitle { get; set; }
@@ -23,6 +23,6 @@ namespace ProductsApiApp.Models
         public string? Fax { get; set; }
         public string? HomePage { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; } // Don't return anything
     }
 }
