@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using TodoApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
-builder.Services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+builder.Services.AddDbContext<TodoContext>(opt => opt.UseSqlServer(GetConnectionStringByName("DatabaseConString")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
 
@@ -18,72 +19,22 @@ app.MapControllers();;
 
 app.Run();
 
-// Simple API version
-
-//app.MapGet("/", () => "Hello World!");
-
-//app.MapGet("/todoitems", async (TodoDb db) =>
-//    await db.Todos.ToListAsync());
-
-//app.MapGet("/todoitems/complete", async (TodoDb db) =>
-//    await db.Todos.Where(t => t.IsComplete).ToListAsync());
-
-//app.MapGet("/todoitems/{id}", async (int id, TodoDb db) =>
-//    await db.Todos.FindAsync(id)
-//        is Todo todo
-//            ? Results.Ok(todo)
-//            : Results.NotFound());
-
-//app.MapPost("/todoitems", async (Todo todo, TodoDb db) =>
-//{
-//    db.Todos.Add(todo);
-//    await db.SaveChangesAsync();
-
-//    return Results.Created($"/todoitems/{todo.Id}", todo);
-//});
-
-//app.MapPut("/todoitems/{id}", async (int id, Todo inputTodo, TodoDb db) =>
-//{
-//    var todo = await db.Todos.FindAsync(id);
-
-//    if (todo is null) return Results.NotFound();
-
-//    todo.Name = inputTodo.Name;
-//    todo.IsComplete = inputTodo.IsComplete;
-
-//    await db.SaveChangesAsync();
-
-//    return Results.NoContent();
-//});
-
-//app.MapDelete("/todoitems/{id}", async (int id, TodoDb db) =>
-//{
-//    if (await db.Todos.FindAsync(id) is Todo todo)
-//    {
-//        db.Todos.Remove(todo);
-//        await db.SaveChangesAsync();
-//        return Results.Ok(todo);
-//    }
-
-//    return Results.NotFound();
-//});
 
 
+// Retrieves a connection string by name.
+// Returns null if the name is not found.
+static string GetConnectionStringByName(string name)
+{
+    // Assume failure.
+    string returnValue = null;
 
-//class Todo
-//{
-//    public int Id { get; set; }
-//    public string? Name { get; set; }
-//    public bool IsComplete { get; set; }
-//}
+    // Look for the name in the connectionStrings section.
+    ConnectionStringSettings settings =
+        System.Configuration.ConfigurationManager.ConnectionStrings[name];
 
-//class TodoDb : DbContext
-//{
-//    public TodoDb(DbContextOptions<TodoDb> options)
-//        : base(options) { }
+    // If found, return the connection string.
+    if (settings != null)
+        returnValue = settings.ConnectionString;
 
-//    public DbSet<Todo> Todos => Set<Todo>();
-////}
-
-
-
+    return returnValue;
+}
