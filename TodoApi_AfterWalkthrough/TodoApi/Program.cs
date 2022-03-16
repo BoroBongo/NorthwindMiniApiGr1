@@ -2,42 +2,42 @@ using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using TodoApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-builder.Services.AddDbContext<TodoContext>(opt => opt.UseSqlServer(GetConnectionStringByName("DatabaseConString")));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-var app = builder.Build();
+namespace TodoApi;
+public class Program
+    {
+    public IConfiguration Configuration { get; }
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer(this.Configuration.GetConnectionString("DBConnection")));
+        builder.Services.AddControllers();
+        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        var app = builder.Build();
 
-if (builder.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-}
+        if (builder.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+        }
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();;
+        app.UseHttpsRedirection();
+        app.UseAuthorization();
+        app.MapControllers(); ;
 
-app.Run();
+        app.Run();
+
+    }
 
 
+    // Retrieves a connection string by name.
+    // Returns null if the name is not found.
+    static string GetConnectionStringByName(string name)
+    {
+        // Assume failure.
+        string returnValue = "Data Source = (localdb)/MSSQLLocalDB; Initial Catalog = Northwind; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
 
-// Retrieves a connection string by name.
-// Returns null if the name is not found.
-static string GetConnectionStringByName(string name)
-{
-    // Assume failure.
-    string returnValue = null;
-
-    // Look for the name in the connectionStrings section.
-    ConnectionStringSettings settings =
-        System.Configuration.ConfigurationManager.ConnectionStrings[name];
-
-    // If found, return the connection string.
-    if (settings != null)
-        returnValue = settings.ConnectionString;
-
-    return returnValue;
+        return returnValue;
+    }
 }
