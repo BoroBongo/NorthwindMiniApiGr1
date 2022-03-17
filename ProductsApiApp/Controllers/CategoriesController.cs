@@ -23,14 +23,16 @@ namespace ProductsApiApp.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories
+                .Select(x => CategoryToDTO(x))
+                .ToListAsync();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(int id)
+        public async Task<ActionResult<CategoryDTO>> GetCategory(int id)
         {
             var category = await _context.Categories.FindAsync(id);
 
@@ -39,7 +41,7 @@ namespace ProductsApiApp.Controllers
                 return NotFound();
             }
 
-            return category;
+            return CategoryToDTO(category);
         }
 
         // PUT: api/Categories/5
@@ -104,5 +106,12 @@ namespace ProductsApiApp.Controllers
         {
             return _context.Categories.Any(e => e.CategoryId == id);
         }
+
+        private static CategoryDTO CategoryToDTO(Category category) =>
+            new CategoryDTO
+            {
+                CategoryName = category.CategoryName,
+                Description = category.Description,
+            };
     }
 }
