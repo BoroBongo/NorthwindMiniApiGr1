@@ -1,4 +1,4 @@
-# *NorthwindMiniApiGr1*
+# *KEN DO THE README*
 <!-- Add banner here -->
 Group Members:
 *Adam*, *Dmitry*, *Jay*, *Hari*, *Shakil*, *Ken*
