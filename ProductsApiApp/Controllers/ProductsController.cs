@@ -110,6 +110,7 @@ namespace ProductsApiApp.Controllers
         private static ProductDTO ProductToDTO(Product product) =>
             new ProductDTO
             {
+                ProductId = product.ProductId,
                 ProductName = product.ProductName,
                 QuantityPerUnit = product.QuantityPerUnit,
                 UnitPrice = product.UnitPrice,
