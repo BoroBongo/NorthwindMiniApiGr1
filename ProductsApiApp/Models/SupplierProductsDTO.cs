@@ -1,6 +1,6 @@
 ﻿namespace ProductsApiApp.Models
 {
-    public class SupplierDTO
+    public class SupplierProductsDTO
     {
         public int SupplierId { get; set; }
         public string CompanyName { get; set; } = null!;
@@ -14,5 +14,6 @@
         public string? Phone { get; set; }
         public string? Fax { get; set; }
         public string? HomePage { get; set; }
+        public virtual ICollection<String> Products { get; set; }
     }
 }

@@ -32,16 +32,17 @@ namespace ProductsApiApp.Controllers
 
         // GET: api/Suppliers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SupplierDTO>> GetSupplier(int id)
+        public async Task<ActionResult<SupplierProductsDTO>> GetSupplier(int id)
         {
-            var supplier = await _context.Suppliers.FindAsync(id);
+            //var supplier = await _context.Suppliers.FindAsync(id);
+            var supplier = await _context.Suppliers.Where(s => s.SupplierId == id).Include(s => s.Products).FirstOrDefaultAsync();
 
             if (supplier == null)
             {
                 return NotFound();
             }
 
-            return SupplierToDTO(supplier);
+            return SupplierProductsToDTO(supplier);
         }
 
         // PUT: api/Suppliers/5
@@ -110,6 +111,7 @@ namespace ProductsApiApp.Controllers
         private static SupplierDTO SupplierToDTO(Supplier supplier) =>
             new SupplierDTO
             {
+                SupplierId = supplier.SupplierId,
                 CompanyName = supplier.CompanyName,
                 ContactName = supplier.ContactName,
                 ContactTitle = supplier.ContactTitle,
@@ -121,6 +123,24 @@ namespace ProductsApiApp.Controllers
                 Phone = supplier.Phone,
                 Fax = supplier.Fax,
                 HomePage = supplier.HomePage,
+            };
+
+        private static SupplierProductsDTO SupplierProductsToDTO(Supplier supplier) =>
+            new SupplierProductsDTO
+            {
+                SupplierId = supplier.SupplierId,
+                CompanyName = supplier.CompanyName,
+                ContactName = supplier.ContactName,
+                ContactTitle = supplier.ContactTitle,
+                Address = supplier.Address,
+                City = supplier.City,
+                Region = supplier.Region,
+                PostalCode = supplier.PostalCode,
+                Country = supplier.Country,
+                Phone = supplier.Phone,
+                Fax = supplier.Fax,
+                HomePage = supplier.HomePage,
+                Products = supplier.Products.Select(p => p.ProductName).ToArray(),
             };
     }
 }
