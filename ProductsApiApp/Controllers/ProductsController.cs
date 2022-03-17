@@ -26,8 +26,11 @@ namespace ProductsApiApp.Controllers
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts()
         {
             var output = from product in _context.Products.Include(c => c.Supplier).Include(c => c.Category)
-                         select product;
-            return await output.Select(x => ProductToDTO(x)).ToListAsync();
+                        select new
+                        {
+                            product
+                        };
+            return await output.Select(x => ProductToDTO(x.product)).ToListAsync();
         }
 
         // GET: api/Products/5
@@ -119,7 +122,9 @@ namespace ProductsApiApp.Controllers
                 ReorderLevel = product.ReorderLevel,
                 Discontinued = product.Discontinued,
                 Category = product.Category.CategoryName,
+                CategoryLink = $"/api/categories/{product.CategoryId}",
                 Supplier = product.Supplier.CompanyName,
+                SupplierLink = $"/api/suppliers/{product.SupplierId}",
             };
         
     }
