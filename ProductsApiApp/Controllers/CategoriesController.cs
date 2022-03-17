@@ -122,7 +122,8 @@ namespace ProductsApiApp.Controllers
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
                 Description = category.Description,
-                Products = category.Products.Select(p => p.ProductName).ToArray(),
+                Products = category.Products.Select(p=>p.ProductName).ToArray(),
+                ProductsLinks = category.Products.Select(p => $"/api/products/{p.ProductId}").ToArray(),
             };
     }
 }

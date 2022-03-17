@@ -141,6 +141,7 @@ namespace ProductsApiApp.Controllers
                 Fax = supplier.Fax,
                 HomePage = supplier.HomePage,
                 Products = supplier.Products.Select(p => p.ProductName).ToArray(),
+                ProductsLinks = supplier.Products.Select(p => $"/api/products/{p.ProductId}").ToArray(),
             };
     }
 }
