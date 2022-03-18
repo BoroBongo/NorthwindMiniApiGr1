@@ -22,5 +22,6 @@ namespace ProductsApiApp.Models
 
         public virtual Category? Category { get; set; } // Add Category Name Only
         public virtual Supplier? Supplier { get; set; } // Add Supplier Name Only
+
     }
 }

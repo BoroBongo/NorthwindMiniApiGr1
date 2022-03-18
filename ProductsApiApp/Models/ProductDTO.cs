@@ -11,7 +11,12 @@
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
 
+        public virtual ICollection<String> ProductsHtmlLinks { get; set; }
+
+
         public virtual string? Category { get; set; } // Add Category Name Only
+        public string? CategoryLink { get; set; }
         public virtual string? Supplier { get; set; } // Add Supplier Name Only
+        public string? SupplierLink { get; set; }
     }
 }

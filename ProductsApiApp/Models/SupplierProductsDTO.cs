@@ -15,5 +15,7 @@
         public string? Fax { get; set; }
         public string? HomePage { get; set; }
         public virtual ICollection<String> Products { get; set; }
+        public virtual ICollection<String> ProductsLinks { get; set; }
+
     }
 }
