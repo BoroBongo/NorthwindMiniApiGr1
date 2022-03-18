@@ -32,6 +32,51 @@ namespace ProductsApiApp.Controllers
                         };
             return await output.Select(x => ProductToDTO(x.product)).ToListAsync();
         }
+        
+        [HttpGet("sorted-by-categories")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsByCat()
+        {
+            var output = from product in _context.Products.Include(c => c.Supplier).Include(c => c.Category)
+                         orderby product.Category.CategoryName
+                         select product;
+            return await output.Select(x => ProductToDTO(x)).ToListAsync();
+        }
+        
+        [HttpGet("sorted-by-suppliers")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsBySuo()
+        {
+            var output = from product in _context.Products.Include(c => c.Supplier).Include(c => c.Category)
+                         orderby product.Supplier.CompanyName
+                         select product;
+            return await output.Select(x => ProductToDTO(x)).ToListAsync();
+        }
+        
+        [HttpGet("starts-with/{str}")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsThatStartWith(string str)
+        {
+            str.ToLower();
+            var output = from product in _context.Products.Include(c => c.Supplier).Include(c => c.Category)
+                         where product.ProductName.ToLower().StartsWith(str)
+                         select product;
+            return await output.Select(x => ProductToDTO(x)).ToListAsync();
+        }
+        
+        [HttpGet("price-lower/{price}")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsLowerThan(int price)
+        {
+            var output = from product in _context.Products.Include(c => c.Supplier).Include(c => c.Category)
+                         where product.UnitPrice <= price
+                         select product;
+            return await output.Select(x => ProductToDTO(x)).ToListAsync();
+        }
+        [HttpGet("price-higher/{price}")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductsHigherThan(int price)
+        {
+            var output = from product in _context.Products.Include(c => c.Supplier).Include(c => c.Category)
+                         where product.UnitPrice >= price
+                         select product;
+            return await output.Select(x => ProductToDTO(x)).ToListAsync();
+        }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
@@ -125,6 +170,14 @@ namespace ProductsApiApp.Controllers
                 CategoryLink = $"/api/categories/{product.CategoryId}",
                 Supplier = product.Supplier.CompanyName,
                 SupplierLink = $"/api/suppliers/{product.SupplierId}",
+                ProductsHtmlLinks = new List<string>{
+                    $"/api/products/{product.ProductId}",
+                    "/api/products/price-higher/{price}",
+                    "/api/products/price-lower/{price}",
+                    "/api/products/starts-with/{str}",
+                    "/api/products/sorted-by-suppliers",
+                    "/api/products/sorted-by-categories"
+                },
             };
         
     }
