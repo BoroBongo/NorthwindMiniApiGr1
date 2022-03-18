@@ -1,4 +1,4 @@
-# *KEN DO THE README*
+Northwind Group 1
 <!-- Add banner here -->
 Group Members:
 *Adam*, *Dmitry*, *Jay*, *Hari*, *Shakil*, *Ken*
