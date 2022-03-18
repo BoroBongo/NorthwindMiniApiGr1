@@ -9,7 +9,9 @@ namespace ProductsApiApp.Models
         {
             Products = new HashSet<Product>();
         }
-
+        /// <summary>
+        /// This is the property for category ID which is a primary key
+        /// </summary>
         public int CategoryId { get; set; } //
         public string CategoryName { get; set; } = null!;
         public string? Description { get; set; }
