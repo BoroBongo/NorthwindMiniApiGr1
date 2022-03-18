@@ -113,11 +113,11 @@ To use this project, first clone the repo on your device using the command below
 
 # Endpoints with Postman
 [Back to top](#table-of-contents)
-- Products<br>
+- API/Products<br>
 ![image info](./1.png)
-- Categories<br>
+- API/Categories/7<br>
 ![image info](./2.png)
-- Suppliers<br>
+- API/Suppliers/3<br>
 ![image info](./3.png)
 
 
