@@ -4,8 +4,6 @@ Group Members:
 *Adam*, *Dmitry*, *Jay*, *Hari*, *Shakil*, *Ken*
 
 <!-- Add buttons here -->
-
----SHORT DESCRIPTION OF THE USABILITY OF THE PRODUCT---
 <!-- .NET library sort methods -->
 
 <!-- The project title should be self explanotory and try not to make it a mouthful. (Although exceptions exist- **awesome-readme-writing-guide-for-open-source-projects** - would have been a cool name)
