@@ -130,6 +130,12 @@ namespace ProductsApiApp.Controllers
         {
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
+            if (product.CategoryId != null)
+            {
+
+                product.Supplier = _context.Suppliers.Where(y => y.SupplierId.Equals(product.SupplierId)).FirstOrDefault();
+                product.Category = _context.Categories.Where(x => x.CategoryId.Equals(product.CategoryId)).FirstOrDefault();
+            }
 
             return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
