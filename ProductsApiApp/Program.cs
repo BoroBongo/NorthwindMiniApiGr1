@@ -2,6 +2,7 @@ using System;
 using System.Data.SqlClient;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using ProductsApiApp.Models;
 
@@ -56,3 +57,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
+app.UseAuthentication();
