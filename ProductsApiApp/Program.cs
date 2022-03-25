@@ -8,13 +8,16 @@ using ProductsApiApp.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var constr = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+var constr = "Data Source=34.253.172.150;Initial Catalog=Northwind;User ID=sa;Password=Passw0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+//SqlConnection conn = new SqlConnection();
+//conn.ConnectionString = constr;
 
-SqlConnection conn = new SqlConnection();
-conn.ConnectionString = constr;
+var connectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer(conn));
+
+builder.Services.AddCors();
+builder.Services.AddDbContext<ProductContext>(opt => opt.UseSqlServer(connectionStr));
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1",

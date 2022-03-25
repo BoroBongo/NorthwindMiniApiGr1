@@ -15,7 +15,6 @@ namespace ProductsApiApp.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ProductContext _context;
-
         public ProductsController(ProductContext context)
         {
             _context = context;
